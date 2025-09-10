@@ -4,7 +4,7 @@ import { db } from '../database/init.js';
 import { generateToken, authAttemptLogger } from '../middleware/auth.js';
 import { authLimiter } from '../middleware/security.js';
 import { validateRequired, validateEmail, throwValidationError } from '../middleware/errorHandler.js';
-import { LoginCredentials, RegisterData, User } from '../types.js';
+import { LoginCredentials, RegisterData, User } from '../types/index.js';
 import { dbManager } from '../database/init.js';
 
 const router = express.Router();
