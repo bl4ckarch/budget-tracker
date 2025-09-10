@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { AuthRequest } from '../types.js';
+import { AuthRequest } from '../types/index.js';
 
 // ==================== INTERFACES POUR LES LOGS ====================
 interface LogEntry {

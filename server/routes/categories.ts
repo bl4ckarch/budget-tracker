@@ -1,7 +1,7 @@
 import express from 'express';
 import { db, dbManager } from '../database/init.js';
 import { authenticateToken } from '../middleware/auth.js';
-import { AuthRequest, Category, CreateCategoryData, CategoryType } from '../types.js';
+import { AuthRequest, Category, CreateCategoryData, CategoryType } from '../types/index.js';
 import { 
   validateRequired, 
   validateString, 

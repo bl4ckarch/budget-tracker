@@ -1,7 +1,7 @@
 import express from 'express';
 import { db } from '../database/init.js';
 import { authenticateToken } from '../middleware/auth.js';
-import { AuthRequest } from '../types.js';
+import { AuthRequest } from '../types/index.js';
 
 const router = express.Router();
 router.use(authenticateToken);

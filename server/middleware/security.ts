@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 // Rate limiter général
 export const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 110000000000000, // Maximum 100 requêtes par IP par fenêtre
+  max: 100, // Maximum 100 requêtes par IP par fenêtre
   message: {
     error: 'Trop de requêtes, veuillez réessayer plus tard',
     retryAfter: '15 minutes'
@@ -22,7 +22,7 @@ export const generalLimiter = rateLimit({
 // Rate limiter strict pour l'authentification
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5100000000000000, // Maximum 5 tentatives de connexion par IP
+  max: 5, // Maximum 5 tentatives de connexion par IP
   message: {
     error: 'Trop de tentatives de connexion, veuillez réessayer plus tard',
     retryAfter: '15 minutes'
@@ -35,7 +35,7 @@ export const authLimiter = rateLimit({
 // Rate limiter pour les transactions (éviter le spam)
 export const transactionLimiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 1100000000000000000000000000000, // Maximum 10 transactions par minute
+  max: 10, // Maximum 10 transactions par minute
   message: {
     error: 'Trop de transactions ajoutées, veuillez patienter',
     retryAfter: '1 minute'
@@ -47,7 +47,7 @@ export const transactionLimiter = rateLimit({
 // Rate limiter pour les paramètres budgétaires
 export const budgetSettingsLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 10000000000000000000000000000, // Maximum 3 modifications de budget par 5 minutes
+  max: 3, // Maximum 3 modifications de budget par 5 minutes
   message: {
     error: 'Trop de modifications de paramètres budgétaires, veuillez patienter',
     retryAfter: '5 minutes'

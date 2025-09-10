@@ -1,7 +1,7 @@
 import express from 'express';
 import { db } from '../database/init.js';
 import { authenticateToken } from '../middleware/auth.js';
-import { AuthRequest, Transaction, BudgetSummary, CategoryBreakdown } from '../types.js';
+import { AuthRequest, Transaction, BudgetSummary, CategoryBreakdown } from '../types/index.js';
 import { AppError, validateRequired, validateNumber, throwNotFoundError } from '../middleware/errorHandler.js';
 
 const router = express.Router();
