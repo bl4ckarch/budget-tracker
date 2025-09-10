@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { db } from '../database/init';
-import { generateToken, authAttemptLogger } from '../middleware/auth';
-import { authLimiter } from '../middleware/security';
-import { validateRequired, validateEmail, throwValidationError } from '../middleware/errorHandler';
-import { LoginCredentials, RegisterData, User } from '../types';
-import { dbManager } from '../database/init';
+import { db } from '../database/init.js';
+import { generateToken, authAttemptLogger } from '../middleware/auth.js';
+import { authLimiter } from '../middleware/security.js';
+import { validateRequired, validateEmail, throwValidationError } from '../middleware/errorHandler.js';
+import { LoginCredentials, RegisterData, User } from '../types.js';
+import { dbManager } from '../database/init.js';
 
 const router = express.Router();
 

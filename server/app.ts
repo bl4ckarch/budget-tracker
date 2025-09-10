@@ -3,10 +3,10 @@ import cors from 'cors';
 import path from 'path';
 import helmet from 'helmet';
 import compression from 'compression';
-import authRoutes from './routes/auth';
-import transactionRoutes from './routes/transactions';
-import categoryRoutes from './routes/categories';
-import { generalLimiter, securityHeaders } from './middleware/security';
+import authRoutes from './routes/auth.js';
+import transactionRoutes from './routes/transactions.js';
+import categoryRoutes from './routes/categories.js';
+import { generalLimiter, securityHeaders } from './middleware/security.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;

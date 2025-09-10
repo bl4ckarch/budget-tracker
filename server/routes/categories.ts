@@ -1,13 +1,13 @@
 import express from 'express';
-import { db, dbManager } from '../database/init';
-import { authenticateToken } from '../middleware/auth';
-import { AuthRequest, Category, CreateCategoryData, CategoryType } from '../types';
+import { db, dbManager } from '../database/init.js';
+import { authenticateToken } from '../middleware/auth.js';
+import { AuthRequest, Category, CreateCategoryData, CategoryType } from '../types.js';
 import { 
   validateRequired, 
   validateString, 
   validateCategoryBudget, 
   throwValidationError 
-} from '../middleware/errorHandler';
+} from '../middleware/errorHandler.js';
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ApiErrorResponse, ValidationError } from '../types';
+import { ApiErrorResponse, ValidationError } from '../types.js';
 
 // ==================== CLASSE D'ERREUR PERSONNALISÉE ====================
 export class AppError extends Error {
