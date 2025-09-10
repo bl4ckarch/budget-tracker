@@ -78,34 +78,35 @@ const CategoryChart: React.FC<CategoryChartProps> = ({ data }) => {
       className: "h-64"
     }, React.createElement(ResponsiveContainer, {
       width: "100%",
-      height: "100%"
-    }, React.createElement(PieChart, {}, [
-      React.createElement(Pie, {
-        key: 'pie',
-        data: expenseData,
-        cx: "50%",
-        cy: "50%",
-        innerRadius: 60,
-        outerRadius: 80,
-        paddingAngle: 5,
-        dataKey: "value"
-      }, expenseData.map((entry, index) => 
-        React.createElement(Cell, {
-          key: `cell-${index}`,
-          fill: entry.color
+      height: "100%",
+      children: React.createElement(PieChart, {}, [
+        React.createElement(Pie, {
+          key: 'pie',
+          data: expenseData,
+          cx: "50%",
+          cy: "50%",
+          innerRadius: 60,
+          outerRadius: 80,
+          paddingAngle: 5,
+          dataKey: "value"
+        }, expenseData.map((entry, index) => 
+          React.createElement(Cell, {
+            key: `cell-${index}`,
+            fill: entry.color
+          })
+        )),
+        React.createElement(Tooltip, {
+          key: 'tooltip',
+          content: CustomTooltip
+        }),
+        React.createElement(Legend as any, {
+          key: 'legend',
+          formatter: (value: string) => React.createElement('span', {
+            className: "text-sm text-gray-700 dark:text-gray-300"
+          }, value)
         })
-      )),
-      React.createElement(Tooltip, {
-        key: 'tooltip',
-        content: React.createElement(CustomTooltip, {})
-      }),
-      React.createElement(Legend, {
-        key: 'legend',
-        formatter: (value: string) => React.createElement('span', {
-          className: "text-sm text-gray-700 dark:text-gray-300"
-        }, value)
-      })
-    ])))
+      ])
+    }))
   ]);
 };
 
