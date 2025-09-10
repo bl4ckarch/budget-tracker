@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  budget-tracker:
+    build: .
+    container_name: budget-tracker-app
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=3001
+      - DATABASE_PATH=/app/data/budget_tracker.db
+      - DEBUG_LOGS=false
+    volumes:
+      # Persistence de la base de données
+      - budget_data:/app/data
+      - budget_logs:/app/logs
+    networks:
+      - budget-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Service de sauvegarde (optionnel)
+  budget-backup:
+    image: alpine:latest
+    container_name: budget-backup
+    restart: unless-stopped
+    volumes:
+      - budget_data:/data:ro
+      - ./backups:/backups
+    environment:
+      - BACKUP_SCHEDULE=0 2 * * *  # Tous les jours à 2h
+    command: >
+      sh -c "
+        echo '0 2 * * * cp /data/budget_tracker.db /backups/budget_tracker_$(date +%Y%m%d_%H%M%S).db && find /backups -name \"budget_tracker_*.db\" -mtime +7 -delete' | crontab - &&
+        crond -f
+      "
+    depends_on:
+      - budget-tracker
+    networks:
+      - budget-network
