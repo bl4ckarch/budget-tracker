@@ -39,30 +39,46 @@ app.use(generalLimiter);
 
 // ==================== CONFIGURATION CORS ====================
 const corsOptions = {
-  origin: function (origin: string | undefined, callback: Function) {
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://localhost:5173',
-      'http://localhost:4173',
-      'https://budget.blackarch.fr',
-      'http://budget.blackarch.fr'
-    ];
-    
-    if (!origin && ENV === 'development') {
-      return callback(null, true);
-    }
-    
-    if (allowedOrigins.includes(origin!)) {
-      callback(null, true);
-    } else {
-      console.warn(`🚫 CORS: Origin ${origin} non autorisé`);
-      callback(new Error('Non autorisé par CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  maxAge: 86400
+    origin: function (origin: string | undefined, callback: Function) {
+        console.log('🔍 CORS - Origin reçu:', origin);
+        console.log('🔍 CORS - Environment:', ENV);
+        
+        const allowedOrigins = [
+            'http://localhost:3000',
+            'http://localhost:5173',
+            'http://localhost:4173',
+            'https://budget.blackarch.fr',
+            'http://budget.blackarch.fr',
+            'http://localhost'
+        ];
+        
+        // Autoriser toujours les requêtes sans origin (proxies, Apache, curl)
+        if (!origin) {
+            console.log('✅ CORS - Pas d\'origin, autorisé (proxy/Apache)');
+            return callback(null, true);
+        }
+        
+        // Autoriser les origines de la liste
+        if (allowedOrigins.includes(origin)) {
+            console.log('✅ CORS - Origin autorisé:', origin);
+            callback(null, true);
+        } else {
+            console.log('🚫 CORS - Origin non autorisé:', origin);
+            console.log('🔍 CORS - Origines autorisées:', allowedOrigins);
+            
+            // En production avec proxies, autoriser quand même pour éviter les blocages
+            if (ENV === 'production') {
+                console.log('⚠️ CORS - Autorisé en production malgré origin non listé');
+                callback(null, true);
+            } else {
+                callback(new Error('Non autorisé par CORS'));
+            }
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    maxAge: 86400
 };
 
 console.log(`🌐 Configuration CORS pour environnement: ${ENV}`);
