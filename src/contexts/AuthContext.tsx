@@ -34,6 +34,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Définir l'URL de base de l'API
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
@@ -49,7 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       console.log('🔄 Tentative de connexion...');
       
-      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -82,7 +85,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       console.log('🔄 Tentative d\'inscription avec:', { email, firstName });
       
-      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +100,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         headers: Object.fromEntries(response.headers.entries())
       });
 
-      // Récupérer le texte brut d'abord
       const responseText = await response.text();
       console.log('📝 Contenu de la réponse (texte brut):', responseText);
 
@@ -106,7 +108,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error(`Erreur ${response.status}: ${responseText}`);
       }
 
-      // Essayer de parser seulement si c'est du JSON valide
       let data;
       try {
         data = JSON.parse(responseText);
@@ -117,7 +118,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error('Réponse du serveur invalide (pas du JSON)');
       }
 
-      // Continuer avec le traitement normal...
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       setToken(data.token);
