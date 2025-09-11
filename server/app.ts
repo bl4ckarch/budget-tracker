@@ -261,7 +261,7 @@ app.post('/api/init-default-categories', async (req, res): Promise<void> => {
 if (ENV === 'production') {
   console.log('📁 Mode production: configuration des fichiers statiques...');
   
-  const staticPath = path.join(__dirname, '../dist');
+  const staticPath = path.join(__dirname, '..');
   console.log(`📂 Chemin statique: ${staticPath}`);
   
   app.use('/assets', express.static(path.join(staticPath, 'assets'), {
