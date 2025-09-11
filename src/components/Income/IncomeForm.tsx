@@ -24,7 +24,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ currentDate, onIncomeSet }) => 
       const year = currentDate.getFullYear();
       
       // Récupérer les paramètres budgétaires
-      const budgetData = await apiRequest(`/api/transactions/budget-settings/${month}/${year}`);
+      const budgetData = await apiRequest(`/transactions/budget-settings/${month}/${year}`);
       setCurrentSettings(budgetData);
       setSalary(budgetData.monthly_salary ? budgetData.monthly_salary.toString() : '2750');
       setSavingsGoal(budgetData.savings_goal ? budgetData.savings_goal.toString() : '800');
@@ -47,7 +47,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ currentDate, onIncomeSet }) => 
   const createOrUpdateSalaryTransaction = async (salaryAmount: number, month: number, year: number) => {
     try {
       // Vérifier s'il existe déjà une transaction de salaire ce mois
-      const transactionsData = await apiRequest(`/api/transactions/${month}/${year}`);
+      const transactionsData = await apiRequest(`/transactions/${month}/${year}`);
       const existingSalaryTransaction = transactionsData.transactions?.find(
         (t: any) => t.category_type === 'income' && 
                    (t.category_name?.toLowerCase().includes('salaire') || 
@@ -59,7 +59,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ currentDate, onIncomeSet }) => 
 
       if (existingSalaryTransaction) {
         // Mettre à jour la transaction existante
-        await apiRequest(`/api/transactions/${existingSalaryTransaction.id}`, {
+        await apiRequest(`/transactions/${existingSalaryTransaction.id}`, {
           method: 'PUT',
           body: JSON.stringify({
             amount: salaryAmount,
@@ -134,7 +134,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ currentDate, onIncomeSet }) => 
       }
 
       // 1. Définir les paramètres budgétaires
-      await apiRequest(`/api/transactions/budget-settings/${month}/${year}`, {
+      await apiRequest(`/transactions/budget-settings/${month}/${year}`, {
         method: 'POST',
         body: JSON.stringify({ 
           monthly_salary: salaryAmount,
