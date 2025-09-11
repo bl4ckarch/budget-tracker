@@ -49,7 +49,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentDate, onRefres
       
       console.log('🔍 Récupération transactions pour:', { month, year });
       
-      const data = await apiRequest(`/api/transactions/${month}/${year}`);
+      const data = await apiRequest(`/transactions/${month}/${year}`);
       console.log('📊 Données reçues:', data);
       
       // Vérification de sécurité - s'assurer que c'est un tableau
@@ -101,7 +101,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ currentDate, onRefres
     }
 
     try {
-      await apiRequest(`/api/transactions/${transactionId}`, {
+      await apiRequest(`/transactions/${transactionId}`, {
         method: 'DELETE'
       });
       
