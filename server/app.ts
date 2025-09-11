@@ -44,7 +44,8 @@ const corsOptions = {
       'http://localhost:3000',
       'http://localhost:5173',
       'http://localhost:4173',
-      'https://your-production-domain.com'
+      'https://budget.blackarch.fr',
+      'http://budget.blackarch.fr'
     ];
     
     if (!origin && ENV === 'development') {
