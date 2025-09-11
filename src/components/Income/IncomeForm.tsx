@@ -30,7 +30,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ currentDate, onIncomeSet }) => 
       setSavingsGoal(budgetData.savings_goal ? budgetData.savings_goal.toString() : '800');
 
       // Récupérer les catégories pour trouver la catégorie "Salaire"
-      const categoriesData = await apiRequest('/api/categories');
+      const categoriesData = await apiRequest('/categories');
       const salarycat = categoriesData.categories?.find(
         (cat: any) => cat.type === 'income' && cat.name.toLowerCase().includes('salaire')
       );
@@ -72,7 +72,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ currentDate, onIncomeSet }) => 
         // Créer une nouvelle transaction de salaire
         if (!salaryCategory) {
           // Créer la catégorie "Salaire" si elle n'existe pas
-          const newCategoryData = await apiRequest('/api/categories', {
+          const newCategoryData = await apiRequest('/categories', {
             method: 'POST',
             body: JSON.stringify({
               name: 'Salaire',
@@ -83,7 +83,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ currentDate, onIncomeSet }) => 
           });
           
           // Utiliser la nouvelle catégorie
-          await apiRequest('/api/transactions', {
+          await apiRequest('/transactions', {
             method: 'POST',
             body: JSON.stringify({
               amount: salaryAmount,
@@ -94,7 +94,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({ currentDate, onIncomeSet }) => 
           });
         } else {
           // Utiliser la catégorie existante
-          await apiRequest('/api/transactions', {
+          await apiRequest('/transactions', {
             method: 'POST',
             body: JSON.stringify({
               amount: salaryAmount,

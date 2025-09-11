@@ -74,7 +74,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   const fetchCategories = async () => {
     try {
       console.log('🔄 Début récupération des catégories...');
-      const data = await apiRequest('/api/categories');
+      const data = await apiRequest('/categories');
       console.log('📦 Réponse brute de l\'API:', data);
       console.log('📦 Type de la réponse:', typeof data);
       
@@ -183,12 +183,12 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
 
       let response;
       if (editingTransaction) {
-        response = await apiRequest(`/api/transactions/${editingTransaction.id}`, {
+        response = await apiRequest(`/transactions/${editingTransaction.id}`, {
           method: 'PUT',
           body: JSON.stringify(payload),
         });
       } else {
-        response = await apiRequest('/api/transactions', {
+        response = await apiRequest('/transactions', {
           method: 'POST',
           body: JSON.stringify(payload),
         });
