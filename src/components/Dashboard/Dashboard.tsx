@@ -41,7 +41,7 @@ const Dashboard: React.FC<DashboardProps> = ({ currentDate }) => {
       const month = (currentDate.getMonth() + 1).toString();
       const year = currentDate.getFullYear().toString();
       
-      const data = await apiRequest(`/api/transactions/summary/${month}/${year}`);
+      const data = await apiRequest(`/transactions/summary/${month}/${year}`);
       setSummary(data);
     } catch (err: any) {
       setError(err.message);
